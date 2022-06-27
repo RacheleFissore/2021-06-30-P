@@ -27,19 +27,21 @@ public class FXMLController {
     private Button btnRicerca;
 
     @FXML
-    private ComboBox<?> boxLocalizzazione;
+    private ComboBox<String> boxLocalizzazione;
 
     @FXML
     private TextArea txtResult;
 
     @FXML
     void doRicerca(ActionEvent event) {
-
+    	txtResult.clear();
+    	txtResult.appendText(model.trovaPercorso(boxLocalizzazione.getValue()));
     }
 
     @FXML
     void doStatistiche(ActionEvent event) {
-
+    	txtResult.clear();
+    	txtResult.appendText(model.getStatistiche(boxLocalizzazione.getValue()));
     }
 
     @FXML
@@ -53,5 +55,9 @@ public class FXMLController {
 
 	public void setModel(Model model) {
 		this.model = model;
+		model.creaGrafo();
+		txtResult.clear();
+		txtResult.appendText("Grafo creato: " + model.getNVertici() + " vertici, " + model.getNArchi() + " archi\n");
+		boxLocalizzazione.getItems().addAll(model.getVertici());
 	}
 }
